@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use App\Http\Resources\DepartmentResource;
 
 class DepartmentController extends Controller
 {
@@ -13,7 +14,7 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::all();
-        return $departments;
+        return DepartmentResource::collection($departments);
     }
 
     /**
@@ -22,14 +23,14 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "string"
+            "name" => "required|string|max:100|min:3",
         ]);
 
         $department = new Department;
         $department->name = $request->name;
         $department->save();
 
-        return $department;
+        return new DepartmentResource($department);
     }
 
     /**
@@ -37,7 +38,7 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        return $department;
+        return new DepartmentResource($department);
     }
 
     /**
@@ -52,7 +53,7 @@ class DepartmentController extends Controller
         $department->name = $request->name;
         $department->save();
 
-        return $department;
+        return new DepartmentResource($department);
     }
 
     /**

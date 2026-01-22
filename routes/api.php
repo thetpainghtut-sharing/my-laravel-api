@@ -26,3 +26,4 @@ Route::get('/users', function (Request $request) {
 
 // Project route start here
 Route::apiresource('departments', App\Http\Controllers\DepartmentController::class);
+Route::apiresource('employees', App\Http\Controllers\EmployeeController::class);
