@@ -15,15 +15,21 @@ use App\Models\Testing;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// --- Public Routes ---
+Route::post('/register', [App\Http\Controllers\Api\AuthController::class, 'register']);
+Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
 
-Route::get('/users', function (Request $request) {
-    $users = Testing::all();
-    return $users;
-});
+// --- Protected Routes (Wrapped with Sanctum) ---
+Route::middleware('auth:sanctum')->group(function () {
 
-// Project route start here
-Route::apiresource('departments', App\Http\Controllers\DepartmentController::class);
-Route::apiresource('employees', App\Http\Controllers\EmployeeController::class);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    // Logout route
+    Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
+
+    // Project route start here
+    Route::apiresource('departments', App\Http\Controllers\DepartmentController::class);
+    Route::apiresource('employees', App\Http\Controllers\EmployeeController::class);
+});
