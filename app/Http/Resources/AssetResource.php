@@ -4,8 +4,9 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\CategoryResource;
 
-class EmployeeResource extends JsonResource
+class AssetResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,16 +15,13 @@ class EmployeeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'employeeId' => $this->eid, // Renaming 'name' to 'title' for frontend
+            'serialNo' => $this->serial_no, // Renaming 
             'name' => $this->name,
-            'email' => $this->email,
-            'gender' => $this->gender,
-            'phoneNo' => $this->phone,
-            'profile' => $this->profile ? asset('storage/' . $this->profile): null,
-            'department' => $this->department,
+            'condition' => $this->status,
+            'photo' => $this->image ? asset('storage/' . $this->image): null,
+            'category' => new CategoryResource($this->category),
             'createdAgo' => $this->created_at->diffForHumans(),
         ];
     }

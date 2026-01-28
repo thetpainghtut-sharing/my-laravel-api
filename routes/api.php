@@ -32,4 +32,13 @@ Route::middleware('auth:sanctum')->group(function () {
     // Project route start here
     Route::apiresource('departments', App\Http\Controllers\DepartmentController::class);
     Route::apiresource('employees', App\Http\Controllers\EmployeeController::class);
+    Route::apiresource('categories', App\Http\Controllers\CategoryController::class);
+    Route::apiresource('assets', App\Http\Controllers\AssetController::class);
+
+    // assign & return
+    Route::post('assign', [App\Http\Controllers\Api\ManageController::class, 'assign']);
+    Route::post('return', [App\Http\Controllers\Api\ManageController::class, 'return']);
+
+    // show available assets
+    
 });

@@ -7,21 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Employee extends Model
+class Asset extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'eid', 'name', 'email', 'gender', 'phone', 'profile', 'department_id'
+        'serial_no', 'name', 'image', 'status', 'category_id'
     ];
 
-    public function department(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Category::class);
     }
 
-    public function assets(): BelongsToMany
+    public function employees(): BelongsToMany
     {
-        return $this->belongsToMany(Asset::class);
+        return $this->belongsToMany(Employee::class)->withTimestamps();
     }
 }
