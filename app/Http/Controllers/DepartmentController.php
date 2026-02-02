@@ -23,11 +23,11 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required|string|max:100|min:3",
+            "title" => "required|string|max:100|min:3",
         ]);
 
         $department = new Department;
-        $department->name = $request->name;
+        $department->name = $request->title;
         $department->save();
 
         return new DepartmentResource($department);
