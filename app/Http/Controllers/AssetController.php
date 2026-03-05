@@ -11,9 +11,19 @@ class AssetController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $assets = Asset::with('category')->get();
+        $assets = Asset::with('category')
+                    // The 'when' method only executes the closure if the first argument is truthy
+                    ->when($request->query('pstatus'), function ($query, $pstatus) {
+                        // 1. Convert the string 'available,assigned' into an array: ['available', 'assigned']
+                        $statuses = explode(',', $pstatus);
+                        
+                        // 2. Use whereIn to look for any of those values
+                        // (Assuming your database column is named 'status')
+                        $query->whereIn('status', $statuses);
+                    })
+                    ->get();
         return AssetResource::collection($assets);
     }
 

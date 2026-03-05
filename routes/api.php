@@ -19,8 +19,6 @@ use App\Models\Testing;
 Route::post('/register', [App\Http\Controllers\Api\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
 
-    Route::apiresource('departments', App\Http\Controllers\DepartmentController::class);
-
 // --- Protected Routes (Wrapped with Sanctum) ---
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -32,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
 
     // Project route start here
+    Route::apiresource('departments', App\Http\Controllers\DepartmentController::class);
     Route::apiresource('employees', App\Http\Controllers\EmployeeController::class);
     Route::apiresource('categories', App\Http\Controllers\CategoryController::class);
     Route::apiresource('assets', App\Http\Controllers\AssetController::class);
